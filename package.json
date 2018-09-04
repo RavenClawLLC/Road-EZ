@@ -1,0 +1,35 @@
+{
+  "name": "road-ez",
+  "version": "1.0.0",
+  "description": "apt-search app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RavenClawLLC/Road-EZ.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RavenClawLLC/Road-EZ/issues"
+  },
+  "homepage": "https://github.com/RavenClawLLC/Road-EZ#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "pg": "^7.4.3",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "sequelize": "^4.38.0"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "webpack": "^4.17.2"
+  }
+}
