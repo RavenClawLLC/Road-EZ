@@ -13,21 +13,24 @@ module.exports = {
   mode: 'development',
   entry,
   output,
-  devtool: 'eval-source-map',
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'react'],
+        use: {
+          loader: ['babel-loader'],
+          query: {
+            presets: ['@babel/preset-env'],
+          },
         },
       },
       {
-        test: /.css/,
+        test: /\.css/,
         exclude: /node_modules/,
-        loader: ['style-loader', 'css-loader'],
+        use: {
+          loader: ['style-loader', 'css-loader'],
+        },
       },
     ],
   },
