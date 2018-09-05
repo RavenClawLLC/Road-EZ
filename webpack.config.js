@@ -10,7 +10,7 @@ const output = {
 };
 
 module.exports = {
-  mode: 'development',
+  //mode: 'development',
   entry,
   output,
   module: {
@@ -19,18 +19,21 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: ['babel-loader'],
-          query: {
-            presets: ['@babel/preset-env'],
+          loader: 'babel-loader',
+          options: {
+            presets: ['react','babel-preset-env'],
           },
         },
       },
       {
         test: /\.css/,
         exclude: /node_modules/,
-        use: {
-          loader: ['style-loader', 'css-loader'],
-        },
+        use: [{
+          loader: 'style-loader',
+        },{
+          loader: 'css-loader'
+        }
+        ],
       },
     ],
   },
