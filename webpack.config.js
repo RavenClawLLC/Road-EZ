@@ -10,7 +10,6 @@ const output = {
 };
 
 module.exports = {
-  //mode: 'development',
   entry,
   output,
   module: {
