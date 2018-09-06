@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 
 class InputFields extends Component {
@@ -15,6 +16,7 @@ class InputFields extends Component {
     // this.walkFrameChange = this.walkFrameChange.bind(this);
     // this.walkTimeChange = this.walkTimeChange.bind(this);
      this.handleInputChange = this.handleInputChange.bind(this);
+     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputChange(e) {
@@ -27,21 +29,19 @@ class InputFields extends Component {
   });
 }
 
+  handleSubmit(e) {
+    axios({
+      method: 'put',
+      url: '',
+      data: this.state
+  })
+}
 
-  // dogNameChange(e) {
-  //   this.setState({dogName: e.target.dogName})
-  // }
-
-  addressChange(e) {}
-
-  walkTimeChange(e) {}
-
-  walkFrameChange(e) {}
 
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <label>
             Dog:
             <input
@@ -72,6 +72,15 @@ class InputFields extends Component {
                 <option value="3PM-5PM">3PM-5PM</option>
             </select>
           </label>
+          <br />
+          <input
+            name="addToSch"
+            type="submit"
+            value ="Add to Schedule" />
+          <input
+            name="addNewDog"
+            type="submit"
+            value="Add New Dog" />
         </form>
       </div>
     );

@@ -6,11 +6,14 @@ class App extends Component {
     super(props);
   }
 
+
+}
+
   render() {
     return (
       <div>
         <p>Hello Worlds</p>
-        <InputFields />
+        <InputFields  passCallback={passCallback}/>
       </div>
     );
   }
