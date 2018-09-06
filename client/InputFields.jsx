@@ -9,6 +9,7 @@ class InputFields extends Component {
       address: '',
       walkTime: '',
       walkFrame: '',
+      myDogs: []
     };
     //
     // this.dogNameChange = this.dogNameChange.bind(this);
@@ -17,28 +18,49 @@ class InputFields extends Component {
     // this.walkTimeChange = this.walkTimeChange.bind(this);
      this.handleInputChange = this.handleInputChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
+     this.getStartState = this.getStartState.bind(this);
+  }
+
+  getStartState() {
+    return {
+      dogName: '',
+      address: '',
+      walkTime: '',
+      walkFrame: '',
+      myDogs: []
+    };
   }
 
   handleInputChange(e) {
-  const target = e.target;
-  const value = target.value;
-  const name = target.name;
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
 
-  this.setState({
-    [name]: value
-  });
-}
+    this.setState({
+      [name]: value
+    });
+  }
 
   handleSubmit(e) {
+    e.preventDefault();
+    console.log(this.state);    
     axios({
       method: 'put',
       url: '/newDog',
       data: this.state
-  })
-}
+    }).then((response) => {
+      const newState = this.getStartState();
+      newState.myDogs = response.data;
+      this.setState(newState);
+    });
+  }
 
 
   render() {
+    const dogList = [];
+    this.state.myDogs.forEach(dog => {
+      dogList.push(<li>{dog.name},{dog.address},{dog.earliest_walk_time}</li>);
+    });
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -82,6 +104,9 @@ class InputFields extends Component {
             type="submit"
             value="Add New Dog" />
         </form>
+        <ul>
+        {dogList}  
+        </ul>
       </div>
     );
   }

@@ -25,9 +25,9 @@ let Dog = sequelize.define('dog', {
     name: { type: Sequelize.STRING, unique: true},
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     address: { type: Sequelize.STRING, allowNull: false },
-    walk_time: { type: Sequelize.INTEGER, allowNull: false },
-    earliest_walk_time: {type: Sequelize.TIME, allowNull: true},
-    latest_walk_time: {type: Sequelize.TIME, allowNull: true}
+    walkTime: { type: Sequelize.INTEGER, allowNull: true },
+    earliest_walk_time: {type: Sequelize.STRING, allowNull: false},
+    latest_walk_time: {type: Sequelize.STRING, allowNull: true}
 });
 
 // 1:M
@@ -39,37 +39,50 @@ User.belongsToMany(Dog, {
 });
 // Room.create({name: 'Main'});
 
-sequelize.sync();
+sequelize.sync({force: true});
 
 const databaseController = {
     createUser: (req, res) => {
         User.create({name: req.body.name}).then(res.send(200));;
     },
 
-    createDog: (req, res) => {
+    createDog: (req, res, next) => {
         Dog.create({
-            name: req.body.name,
+            name: req.body.dogName,
             address: req.body.address,
-            walk_time: req.body.walk_time,
-            earliest_walk_time: req.body.earliest_walk_time,
-            latest_walk_time: req.body.latest_walk_time
-        }).then(res.send(200));
+            earliest_walk_time: req.body.walkTime
+        }).then(() => {
+            next();
+        });
     },
 
     getYourDogs: (req, res) => {
-        Dog.findAll({
-            include: [{
-                model: User,
-                through: {
-                    attributes: ['id']
-                },
-                where: {
-                    name: req.cookies.name
+        console.log('getting dogs');
+        Dog.findAll(
+            // include: [{
+            //     model: User,
+            //     through: {
+            //         attributes: ['id']
+            //     },
+            //     where: {
+            //         name: req.cookies.name
+            //     }
+            // }]
+        ).then((dogs) => {
+            dogs.sort((dogA,dogB) => {
+                const a = dogA.earliest_walk_time;
+                const b = dogB.earliest_walk_time;
+                const testA = a.substring(0, a.indexOf('-'));
+                const testB = b.substring(0, b.indexOf('-'));
+                let aVal = Number(testA.substring(0, testA.length-2));
+                let bVal = Number(testB.substring(0, testB.length-2));
+                if (testA.substring(testA.length-2) === 'PM') {
+                    aVal += 12;
                 }
-            }]
-        }).then((dogs) => {
-            dogs.sort((a,b) => {
-                if (b.earliest_walk_time < a.earliest_walk_time) {
+                if (testB.substring(testB.length-2) === 'PM') {
+                    bVal += 12;
+                }
+                if (bVal < aVal) {
                     return 1;
                 }
                 else {

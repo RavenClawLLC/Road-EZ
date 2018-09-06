@@ -7,13 +7,12 @@ class App extends Component {
   }
 
 
-}
 
   render() {
     return (
       <div>
         <p>Hello Worlds</p>
-        <InputFields  passCallback={passCallback}/>
+        <InputFields />
       </div>
     );
   }
