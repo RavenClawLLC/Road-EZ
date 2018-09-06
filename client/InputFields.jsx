@@ -9,14 +9,28 @@ class InputFields extends Component {
       walkTime: '',
       walkFrame: '',
     };
-
-    this.dogNameChange = this.dogNameChange.bind(this);
-    this.addressChange = this.addressChange.bind(this);
-    this.walkFrameChange = this.walkFrameChange.bind(this);
-    this.walkTimeChange = this.walkTimeChange.bind(this);
+    //
+    // this.dogNameChange = this.dogNameChange.bind(this);
+    // this.addressChange = this.addressChange.bind(this);
+    // this.walkFrameChange = this.walkFrameChange.bind(this);
+    // this.walkTimeChange = this.walkTimeChange.bind(this);
+     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  dogNameChange(e) {}
+  handleInputChange(e) {
+  const target = e.target;
+  const value = target.value;
+  const name = target.name;
+
+  this.setState({
+    [name]: value
+  });
+}
+
+
+  // dogNameChange(e) {
+  //   this.setState({dogName: e.target.dogName})
+  // }
 
   addressChange(e) {}
 
@@ -28,8 +42,36 @@ class InputFields extends Component {
     return (
       <div>
         <form>
-          <input type="text" />
-          <input type="text" />
+          <label>
+            Dog:
+            <input
+              name="dogName"
+              type="text"
+              value={this.state.dogName}
+              onChange={this.handleInputChange} />
+          </label>
+          <br />
+          <label>
+            Address:
+            <input
+              name="address"
+              type="text"
+              value={this.state.addressChange}
+              onChange={this.handleInputChange} />
+          </label>
+          <br />
+          <label>
+            Walk Time:
+            <select
+              name="walkTime"
+              value={this.state.walkTime}
+              onChange={this.handleInputChange}>
+                <option value="9AM-11AM">9AM-11AM</option>
+                <option value="11AM-1PM">11AM-1PM</option>
+                <option value="1PM-3PM">1PM-3PM</option>
+                <option value="3PM-5PM">3PM-5PM</option>
+            </select>
+          </label>
         </form>
       </div>
     );
